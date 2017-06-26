@@ -1,0 +1,149 @@
+{%extends 'base.html'%}
+{% block body %}
+	{%if login%}
+	<style>
+		#wrapper { position: relative; }
+		#over_map { position: relative; opacity: .9;width:100%;height:100%;}
+		#map-canvas {width: 100%;height: 400px;}
+		.labels {
+			color: red;
+			background-color: white;
+			font-family: "Lucida Grande", "Arial", sans-serif;
+			font-size: 10px;
+			font-weight: bold;
+			text-align: center;
+			width: 60px;     
+			border: 2px solid black;
+			white-space: nowrap;
+		}
+			   
+	</style>
+		<div class="container-fluid">
+			<h1 style ="color:dodgerblue; text-align:center; font-size:40px;">{{username}}  Welcome to 
+				<span style ="color:dodgerblue; font-size:70px"> Sbike 
+				<img src="img/sbikes_app_icon.png" width="60" height="60"> </img> 
+
+			</h1>
+			{%endif%}
+			<form method=post>
+			<button type="submit" name='action' value='sign_out'> Sign out </button>
+			</form>
+			
+			
+
+		   
+			<div class='row'>
+			<div class="panel panel-default">
+	  		<div class="panel-body">
+			<div id="wrapper">
+				<!-- Map -->
+			   <div id="map-canvas"></div>
+			   <!-- Icons -->
+			   <div id="over_map" style="float:left" align ='center'>	
+					<input type = 'image' src="img/currentlocation_button.png" width="80" height="80"
+					style="margin-right:1%">
+
+					<input type ='image' src="img/favourites_button.png" width="80" height="80"
+					style="margin-right:1%">
+
+					<input type ='image' src="img/social_nonselected.png" width="80" height="80"
+					style="margin-right:1%">
+
+					<input type ='image' src="img/nearby_button.png" width="80" height="80"
+					style="margin-right:1%" onclick="find_nearby_store()">
+
+					<input type ='image' src="img/profile_button.png" width="80" height="80"
+					style="margin-right:1%">
+
+					<input type ='image' src="img/settings_button.png" width="80" height="80"
+					style="margin-right:1%">
+
+					<p style="clear: both">
+					</p>
+				</div>
+			</div>
+			</div>
+			</div>
+				</div>
+		</div>
+
+	<!-- Load Google Map -->
+	 <script>
+	 var myLatLng;
+	 var map;
+	      function initialize() {
+	      	myLatLng = new google.maps.LatLng(1.342044, 103.9639825)
+	        var mapCanvas = document.getElementById('map-canvas');
+	        var mapOptions = {
+	          center: myLatLng,
+	          zoom: 16,
+	          mapTypeId: google.maps.MapTypeId.ROADMAP
+	        }        
+			
+	        map = new google.maps.Map(mapCanvas, mapOptions)
+	        var iconBase = '/img/';
+
+			var icon = {
+	            url : iconBase + 'bicycle_marker.png', //url
+	            scaledSize : new google.maps.Size(40, 50), // scaled size
+			    origin : new google.maps.Point(0,0), // origin
+			    anchor : new google.maps.Point(20, 50), // anchor 
+			    // size: new google.maps.Size(71, 71),
+		    };
+
+	        var marker = new google.maps.Marker({
+			  position: myLatLng,
+			  map: map,
+			  icon: icon,
+			  clickable	: true,
+			  cursor : "show"
+			});
+
+			var image = {
+			  url: iconBase + 'bicycle_marker.png',
+			  size: new google.maps.Size(71, 71),
+			  origin: new google.maps.Point(0, 0),
+			  anchor: new google.maps.Point(17, 34),
+			  scaledSize: new google.maps.Size(25, 25)
+			};
+
+			google.maps.event.addListener(marker, 'click', function() {
+			    map.setZoom(8);
+			    map.setCenter(marker.getPosition());
+			  });
+			
+	      };
+
+	      google.maps.event.addDomListener(window, 'load', initialize);
+	      function find_nearby_store(){
+	      	console.log(myLatLng);
+	      	console.log(map);
+	      	var service = new google.maps.places.PlacesService(map);
+			  service.nearbySearch({
+			    location: myLatLng,
+			    radius: 500,
+			    types: ['cafe']
+			  }, callback);
+			
+
+			function callback(results, status) {
+			  if (status === google.maps.places.PlacesServiceStatus.OK) {
+			    for (var i = 0; i < results.length; i++) {
+			      createMarker(results[i]);
+			    }
+			  }
+			}
+
+			function createMarker(place) {
+			  var placeLoc = place.geometry.location;
+			  var marker = new google.maps.Marker({
+			    map: map,
+			    position: place.geometry.location
+			  });
+		}
+	};
+	</script>
+
+		
+{% endblock %}
+

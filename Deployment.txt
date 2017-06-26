@@ -1,0 +1,6 @@
+cd..
+cd..
+cd Programfilesx86
+cd Google
+cd google_appengine
+cmd > appcfg.py -A sbikeweb-964 update D:\sbikeweb

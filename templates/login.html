@@ -1,0 +1,151 @@
+{%extends 'base.html'%}
+{% block body %}
+<!-- Greeting Buttons -->
+ <script>
+    $(document).ready(function(){
+        $("#login_button").click(function(){
+          var $detail = $("#SignIn");
+            if ($detail.data('hidden')==true){
+              $detail.hide('slow');
+              $detail.data('hidden',false)
+            }
+            else {
+              $detail.show('slow');
+              $detail.data('hidden',true)
+            }   
+            var $detail2 = $("#SignUp");
+            if ($detail2.data('hidden')==true){
+              $detail2.hide('slow');
+              $detail2.data('hidden',false)
+            }
+
+        });
+        $("#signup_button").click(function(){
+          var $detail = $("#SignUp");
+            if ($detail.data('hidden')==true){
+              $detail.hide('slow');
+              $detail.data('hidden',false)
+            }
+            else {
+              $detail.show('slow');
+              $detail.data('hidden',true)
+            }      
+          var $detail2 = $("#SignIn");
+            if ($detail2.data('hidden')==true){
+              $detail2.hide('slow');
+              $detail2.data('hidden',false)
+            }
+
+
+        });
+
+        if (screen.width<=600){
+          $("#sign_in_box").removeClass("form-group col-xs-6 col-md-offset-3").addClass("form-group col-md-offset-3");
+          $("#sign_up_box").removeClass("form-group col-xs-6 col-md-offset-3").addClass("form-group col-md-offset-3");
+        }
+        
+    });
+
+  </script>
+
+<header>
+<!-- <div id="bg">
+  <img src="/img/bg_login.jpg" alt="">
+</div> -->
+<div class = 'container-fluid'> 
+<div class="header-content">
+    <div class="header-content-inner" align='center'>
+        <h1 style ="text-align:center; font-size:40px;"> Welcome to 
+			<span style ="font-size:70px"> Sbike 
+			<img src="img/sbikes_app_icon.png" width="60" height="60"> </img> 
+		</h1>
+        <h3>Go places on bike!</h3>
+
+        <br>
+
+        <!-- Sign in div-->
+        <a class="btn btn-primary btn-xl" id = 'login_button'>Sign in</a>
+        <h4>If you already have an account</h4>
+        <div class = 'container-fluid'  align='center'>
+        <div class="row-fluid">
+        <div id="SignIn" aria-hidden="true" data-hidden="false" style="display:none">
+              
+              <form method='post'>  
+                    <div class="form-group col-xs-6 col-md-offset-3" id="sign_in_box">
+
+                    <input type="text" class="form-control" placeholder="Email" aria-describedby="basic-addon3" name="email"> 
+                    <input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon3" name="password">
+                          
+                  <br>
+                  <button type="submit" class="btn btn-submit" name="action" value="sign_in">Submit</button>
+                  </div> 
+              </form>
+        </div>
+      </div>
+      </div>
+        <br>
+        <!-- Sign up div-->
+        <a class="btn btn-primary btn-xl" id = 'signup_button'>Sign up</a>
+        <h4>Join us today!</h4>      
+        <div class = 'container-fluid'  align='center'>
+        <div class="row">
+        <div id="SignUp" data-hidden="false" style="display:none" aria-hidden="true">
+              <form method='post'>
+             <div class="form-group col-xs-6 col-md-offset-3" id="sign_up_box">      
+                  <input type="text" class="form-control" placeholder="example@mymail.sutd.edu.sg" aria-describedby="basic-addon1", name="email">
+          
+                  <input type="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1", name="password">
+
+            
+                  <input type="text" class="form-control" placeholder="Tel" aria-describedby="basic-addon1", name="phone">
+              
+              <br>              
+              <button type="submit" class="btn btn-submit" name="action" value="sign_up">Submit</button> 
+              </div>
+              </form>
+        </div>
+        </div>
+        </div>
+        <br>
+
+        <!-- Google Sign in-->
+        <form method=post>
+            <button class="btn btn-primary btn-xl" name="action" value="google_signin">Sign in with google</button>
+            <h4>Easy log in with your google account</h4>
+        </form>
+    </div>
+</div>
+</div>
+
+</head>
+
+{%if fail%}
+	<div class="alert alert-warning alert-dismissible" role="alert">
+    <div class = 'container-fluid'>
+	  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  <strong>Warning!</strong> {{message}}
+  </div>
+	</div>
+
+{%endif%}
+{%if signup%}
+	<div class="alert alert-warning alert-dismissible" role="alert">
+    <div class = 'container-fluid'>
+	  <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	  <strong>Hi {{username}} !</strong> You have successfully sign up!
+  </div>
+	</div>
+
+{%endif%}
+
+
+
+
+
+
+
+{% endblock %}
+
+</header>
+
+

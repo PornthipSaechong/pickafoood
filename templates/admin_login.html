@@ -1,0 +1,98 @@
+{%extends 'blank.html'%}
+{% block body %}
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#myTable').DataTable();
+    console.log("called")
+});
+</script>
+ <div class="content-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h4 class="page-head-line">Test Page</h4>
+
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                	<form method="post">                	
+                	<input class="hidden" name="user_id" value="5629499534213120">
+                	<input name="bike_id" placeholder="Bike id">
+                	<button type="submit" class="btn btn-submit btn-success" name="action" value="book_bike">Book bike</button> (from user)
+	                </form>
+	                <form method="post">                	
+                	<input name="booking_id" value="" placeholder="Booking id">
+                	<input name="gps_x" placeholder="gps_x">
+                	<input name="gps_y" placeholder="gps_y">
+                	<button type="submit" class="btn btn-submit btn-success" name="action" value="retreive_booking">Retrieve bike</button> (from bike)
+	                </form>
+	                <form method="post">                	
+                	<input name="bike_id" placeholder="Bike id">
+                	<input class="hidden" name="user_id" value="5629499534213120">
+                	<input name="gps_x" placeholder="gps_x">
+                	<input name="gps_y" placeholder="gps_y">
+                	<button type="submit" class="btn btn-submit btn-success" name="action" value="rent_bike">Rent bike</button> (from bike)
+	                </form>
+	                <form method="post">                	
+                	<input name="booking_id" value="" placeholder="Booking id">
+                	<input name="gps_x" placeholder="gps_x">
+                	<input name="gps_y" placeholder="gps_y">
+                	<button type="submit" class="btn btn-submit btn-success" name="action" value="park_bike">Park bike</button> (from bike)
+	                </form>
+
+                	<br>
+                	<form method="post">            	
+                	<input name="url" placeholder="Bike server">
+                	<button type="submit" class="btn btn-submit btn-success" name="action" value="repoint">Repoint Server</button>
+	                </form>
+
+                	<br>
+                	<form method="post">                	
+                	<input class="hidden" name="user_id" value="5629499534213120">
+                	<input name="bike_id" placeholder="Bike id">
+                	<input name="gps_x" placeholder="gps_x">
+                	<input name="gps_y" placeholder="gps_y">
+                	<button type="submit" class="btn btn-submit btn-success" name="action" value="update_bike_server">Update bike</button> (from bike)
+	                </form>
+                </div>
+                
+            </div>
+            <table id="myTable">
+                	<thead>
+                		<tr>
+                		<th>Booking Ref</th>
+                		<th>Bid</th>
+                		<th>User</th>
+                		<th>Rented Time</th>
+                		<th>Current Time</th>
+                		<th>Parked Time</th>
+                		<th>Status</th>
+                		<!-- <th>Sos</th>
+                		<th>Payment</th> -->
+                		<th>Route</th>
+	                	</tr>
+                	</thead>
+                	<tbody>
+		                {% for data in generals %}
+		                <tr>
+		                	<td>{{data.key.id()}}</td>
+		                	<td>{{data.bike}}</td>
+	                		<td>{{data.user.id()}}</td>
+	                		<td>{% if data.rentedTime %}{{data.rentedTime|to_time}} {%endif%}</td>
+	                		<td>{% if data.currentTime %}{{data.currentTime|to_time}} {%endif%}</td>
+	                		<td>{% if data.parkedTime %}{{data.parkedTime|to_time}} {%endif%}</td>
+	                		<td>{{data.status}}</td>
+	                		<!-- <td>{{data.sos}}</td>
+	                		<td>{{data.payment}}</td> -->
+	                		<td>{{data.route}}</td>
+		                </tr>
+		                
+		                {% endfor %}
+                </tbody>
+	            </table>
+        </div>
+    </div>
+
+{% endblock %}
